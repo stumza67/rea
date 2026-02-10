@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine My Love 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#ff4b7d,#ff758c,#ff9a9e);
+  background-size:400% 400%;
+  animation:bg 10s ease infinite;
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+section{padding:40px 20px;}
+
+.card{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:25px;
+  max-width:700px;
+  margin:20px auto;
+}
+
+button{
+  background:white;
+  color:#ff4b7d;
+  border:none;
+  padding:12px 25px;
+  border-radius:30px;
+  font-size:16px;
+  margin:10px;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.1);}
+
+.heart{
+  position:fixed;
+  bottom:-10px;
+  font-size:18px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-100vh);opacity:0;}
+}
+
+#secret,#surprise,#popup{display:none;}
+
+.card-btn{
+  background:white;
+  color:#ff4b7d;
+  font-size:30px;
+  border-radius:15px;
+  padding:15px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.card-btn.matched{
+  background:#ff4b7d;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<section>
+  <h1>Happy Valentine’s Day 💘</h1>
+  <h2>To the One Who Owns My Heart</h2>
+</section>
+
+<section class="card">
+  <h2>💌 My Love Letter</h2>
+  <p id="typing"></p>
+</section>
+
+<section class="card">
+  <h2>⏳ Countdown to Valentine</h2>
+  <h3 id="countdown"></h3>
+</section>
+
+<section class="card">
+  <h2>💝 Why I Love You</h2>
+  <button onclick="toggle()">Tap to Reveal</button>
+  <div id="secret">
+    <p>❤️ Your smile</p>
+    <p>❤️ Your voice</p>
+    <p>❤️ Your heart</p>
+    <p>❤️ The way you make me feel safe</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📈 Love Meter</h2>
+  <h3 id="meter">0%</h3>
+  <button onclick="increase()">Increase Love</button>
+</section>
+
+<section class="card">
+  <h2>💬 Random Love Quote</h2>
+  <p id="quote"></p>
+  <button onclick="newQuote()">New Quote</button>
+</section>
+
+<!-- MEMORY GAME -->
+<section class="card">
+  <h2>🎮 Let’s play a little game before your surprise</h2>
+  <p>Match 2 same cards 💕</p>
+  <h3>Moves: <span id="moves">0</span></h3>
+
+  <div id="game" style="display:grid;grid-template-columns:repeat(4,70px);gap:10px;justify-content:center;"></div>
+</section>
+
+<section class="card" id="surprise">
+  <h2>🎁 My Surprise For You 💖</h2>
+  <p>
+    You won the game, my love 🥹  
+    Just like you win my heart every single day.  
+    Will you be my Valentine and my forever? 💍💘
+  </p>
+</section>
+
+<section class="card">
+  <h2>📞 Stay Connected</h2>
+  <button onclick="location.href='tel:+27XXXXXXXXX'">Call Me</button>
+  <button onclick="location.href='https://wa.me/27XXXXXXXXX'">WhatsApp Me</button>
+  <button onclick="navigator.share({title:'Valentine',url:location.href})">Share 💌</button>
+</section>
+
+<section class="card">
+  <h2>💍 Will You Be My Valentine?</h2>
+  <button onclick="yes()">YES 💖</button>
+  <button id="no" onmouseover="moveNo()">NO 😭</button>
+</section>
+
+<div id="popup">
+  <div class="card">
+    <h2>🎆 You Made Me the Happiest Person Alive 💕</h2>
+    <button onclick="closePop()">Close</button>
+  </div>
+</div>
+
+<script>
+// Typing
+const text="My love, even when the world is loud and life is heavy, thinking of you brings me peace. This little website is nothing compared to what I feel for you.";
+let i=0;
+(function type(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i++);
+    setTimeout(type,50);
+  }
+})();
+
+// Countdown
+const val=new Date("Feb 14, 2026").getTime();
+setInterval(()=>{
+  const d=val-new Date().getTime();
+  document.getElementById("countdown").innerHTML=Math.floor(d/(1000*60*60*24))+" days 💕";
+},1000);
+
+// Hearts
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.innerHTML="❤️";
+  h.className="heart";
+  h.style.left=Math.random()*100+"%";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+
+// Toggle
+function toggle(){
+  secret.style.display=secret.style.display==="block"?"none":"block";
+}
+
+// Love meter
+let love=0;
+function increase(){
+  if(love<100){love+=10;meter.innerHTML=love+"%";}
+}
+
+// Quotes
+const quotes=["I choose you. Always.","You are my home.","My heart is yours.","Loving you is my favorite thing."];
+function newQuote(){
+  quote.innerHTML=quotes[Math.floor(Math.random()*quotes.length)];
+}
+newQuote();
+
+// Memory game
+const emojis=["❤️","🎈","🎁","🎂","⭐","🎉"];
+let cards=[...emojis,...emojis].sort(()=>0.5-Math.random());
+let first=null,lock=false,matches=0,moves=0;
+
+cards.forEach(e=>{
+  const c=document.createElement("div");
+  c.className="card-btn";
+  c.innerHTML="❓";
+  c.onclick=()=>{
+    if(lock||c.classList.contains("matched"))return;
+    c.innerHTML=e;
+    if(!first){first={c,e};}
+    else{
+      moves++;movesEl.innerText=moves;
+      if(first.e===e){
+        c.classList.add("matched");
+        first.c.classList.add("matched");
+        matches++;
+        if(matches===emojis.length)surprise.style.display="block";
+        first=null;
+      }else{
+        lock=true;
+        setTimeout(()=>{
+          c.innerHTML="❓";
+          first.c.innerHTML="❓";
+          first=null;lock=false;
+        },800);
+      }
+    }
+  };
+  game.appendChild(c);
+});
+const movesEl=document.getElementById("moves");
+
+// Valentine popup
+function yes(){popup.style.display="block";}
+function closePop(){popup.style.display="none";}
+function moveNo(){
+  no.style.position="absolute";
+  no.style.left=Math.random()*80+"%";
+  no.style.top=Math.random()*80+"%";
+}
+</script>
+
+</body>
+</html>
